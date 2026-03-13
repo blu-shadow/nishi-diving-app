@@ -1,0 +1,247 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Google Font fallback ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ── CSS Variables ── */
+@layer base {
+  :root {
+    --color-primary:   #0e7ef5;
+    --color-secondary: #0d2c5e;
+    --color-accent:    #00d4aa;
+    --bottom-nav-h:    72px;
+    --topbar-h:        64px;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply font-sans bg-gray-50 text-gray-900 antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Dark mode body */
+  body.dark {
+    @apply bg-gray-950 text-gray-100;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar       { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { @apply bg-transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-ocean-300 rounded-full; }
+  body.dark ::-webkit-scrollbar-thumb { @apply bg-ocean-700; }
+
+  /* Input base reset */
+  input, textarea, select {
+    @apply outline-none;
+  }
+}
+
+/* ── Reusable Component Classes ── */
+@layer components {
+
+  /* ─ Buttons ─ */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-ocean-600 hover:bg-ocean-700 active:bg-ocean-800
+           text-white font-semibold
+           px-5 py-3 rounded-2xl
+           transition-all duration-200
+           shadow-ocean hover:shadow-lg
+           disabled:opacity-50 disabled:cursor-not-allowed
+           select-none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-white hover:bg-gray-50 active:bg-gray-100
+           dark:bg-gray-800 dark:hover:bg-gray-700
+           text-ocean-600 dark:text-ocean-400
+           font-semibold border border-ocean-200 dark:border-ocean-800
+           px-5 py-3 rounded-2xl
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed
+           select-none;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2
+           bg-red-500 hover:bg-red-600 active:bg-red-700
+           text-white font-semibold
+           px-5 py-3 rounded-2xl
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed
+           select-none;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           text-gray-600 dark:text-gray-400
+           hover:bg-gray-100 dark:hover:bg-gray-800
+           font-medium px-4 py-2 rounded-xl
+           transition-all duration-200
+           select-none;
+  }
+
+  .btn-icon {
+    @apply flex items-center justify-center
+           w-10 h-10 rounded-xl
+           hover:bg-gray-100 dark:hover:bg-gray-800
+           text-gray-600 dark:text-gray-300
+           transition-all duration-200
+           select-none;
+  }
+
+  /* ─ Cards ─ */
+  .card {
+    @apply bg-white dark:bg-gray-900
+           rounded-2xl shadow-card
+           border border-gray-100 dark:border-gray-800
+           overflow-hidden;
+  }
+
+  .card-hover {
+    @apply card
+           hover:shadow-lg hover:-translate-y-0.5
+           active:translate-y-0 active:shadow-card
+           transition-all duration-200 cursor-pointer;
+  }
+
+  /* ─ Inputs ─ */
+  .input-field {
+    @apply w-full px-4 py-3
+           bg-gray-50 dark:bg-gray-800
+           border border-gray-200 dark:border-gray-700
+           rounded-xl
+           text-gray-900 dark:text-gray-100
+           placeholder-gray-400 dark:placeholder-gray-500
+           focus:ring-2 focus:ring-ocean-500 focus:ring-opacity-30
+           focus:border-ocean-500 dark:focus:border-ocean-400
+           transition-all duration-200
+           text-sm;
+  }
+
+  .input-label {
+    @apply block text-sm font-semibold
+           text-gray-700 dark:text-gray-300
+           mb-1.5;
+  }
+
+  /* ─ Badges ─ */
+  .badge {
+    @apply inline-flex items-center gap-1
+           text-xs font-semibold
+           px-2.5 py-0.5 rounded-full;
+  }
+
+  .badge-pending    { @apply badge bg-yellow-100  text-yellow-700  dark:bg-yellow-900/30  dark:text-yellow-400; }
+  .badge-confirmed  { @apply badge bg-blue-100    text-blue-700    dark:bg-blue-900/30    dark:text-blue-400; }
+  .badge-progress   { @apply badge bg-purple-100  text-purple-700  dark:bg-purple-900/30  dark:text-purple-400; }
+  .badge-completed  { @apply badge bg-green-100   text-green-700   dark:bg-green-900/30   dark:text-green-400; }
+  .badge-cancelled  { @apply badge bg-red-100     text-red-700     dark:bg-red-900/30     dark:text-red-400; }
+
+  /* ─ Page wrapper (accounts for fixed topbar & bottom nav) ─ */
+  .page-wrapper {
+    @apply min-h-screen
+           pt-[var(--topbar-h)]
+           pb-[calc(var(--bottom-nav-h)+16px)]
+           animate-fade-in;
+  }
+
+  /* ─ Section title ─ */
+  .section-title {
+    @apply text-lg font-bold
+           text-gray-900 dark:text-gray-100
+           mb-4;
+  }
+
+  /* ─ Divider ─ */
+  .divider {
+    @apply border-t border-gray-100 dark:border-gray-800 my-4;
+  }
+
+  /* ─ Loading spinner ─ */
+  .spinner {
+    @apply w-5 h-5 border-2 border-current border-t-transparent
+           rounded-full animate-spin;
+  }
+
+  /* ─ Empty state ─ */
+  .empty-state {
+    @apply flex flex-col items-center justify-center
+           py-16 px-6 text-center;
+  }
+
+  /* ─ Glass card (for topbar, modals) ─ */
+  .glass {
+    @apply bg-white/80 dark:bg-gray-900/80
+           backdrop-blur-md
+           border-b border-gray-200/60 dark:border-gray-700/60;
+  }
+
+  /* ─ Admin sidebar item ─ */
+  .admin-nav-item {
+    @apply flex items-center gap-3 px-4 py-3
+           rounded-xl font-medium text-sm
+           text-gray-600 dark:text-gray-400
+           hover:bg-ocean-50 dark:hover:bg-ocean-950
+           hover:text-ocean-700 dark:hover:text-ocean-300
+           transition-all duration-200 cursor-pointer;
+  }
+
+  .admin-nav-item.active {
+    @apply bg-ocean-50 dark:bg-ocean-950
+           text-ocean-700 dark:text-ocean-300
+           font-semibold;
+  }
+
+  /* ─ Status color map ─ */
+  .status-pending     { @apply text-yellow-600 dark:text-yellow-400; }
+  .status-confirmed   { @apply text-blue-600   dark:text-blue-400; }
+  .status-in-progress { @apply text-purple-600 dark:text-purple-400; }
+  .status-completed   { @apply text-green-600  dark:text-green-400; }
+  .status-cancelled   { @apply text-red-600    dark:text-red-400; }
+}
+
+/* ── Utilities ── */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .text-balance { text-wrap: balance; }
+
+  .safe-bottom {
+    padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom));
+  }
+}
+
+/* ── Bottom nav active glow ── */
+.bottom-nav-active-glow {
+  box-shadow: 0 0 12px rgba(14, 126, 245, 0.35);
+}
+
+/* ── Notification badge ── */
+.notif-badge {
+  @apply absolute -top-1 -right-1
+         min-w-[18px] h-[18px]
+         bg-red-500 text-white
+         text-[10px] font-bold
+         rounded-full
+         flex items-center justify-center px-1
+         ring-2 ring-white dark:ring-gray-900;
+}
+
+/* ── Smooth page transitions ── */
+.page-enter {
+  animation: slideUp 0.25s ease-out;
+}
